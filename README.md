@@ -31,17 +31,18 @@ Este projeto implementa uma estrutura de dados para grafos usando lista de adjac
 
 #### Compilar:
 ```bash
-make
+gcc main.c grafo.c -o programa
 ```
 
 #### Executar:
 ```bash
-make run
+./programa.exe
 ```
 
 #### Limpar arquivos compilados:
+Remova manualmente o executável se desejar:
 ```bash
-make clean
+del programa.exe
 ```
 
 ### Análise da Rede Inf-Power
