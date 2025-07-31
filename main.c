@@ -2,38 +2,33 @@
 
 int main() {
     printf("=== Analise da Rede Inf-Power ===\n\nCarregando grafo do arquivo inf-power.mtx...\n");
-    Grafo* G = carregarGrafoMTX("inf-power/inf-power.mtx");
+    Grafo* G = carregarGrafoMTX("inf-power.mtx");
     
     if (!G) return printf("Erro ao carregar o grafo!\n"), 1;
     printf("Grafo carregado com sucesso!\n\n");
     
-    // Informações básicas
     printf("=== Informacoes Basicas ===\n");
     printf("Numero de vertices: %d\nTipo: %s\nPonderado: %s\n",
            G->num_vertices, G->eh_direcionado ? "Direcionado" : "Nao direcionado",
            G->eh_ponderado ? "Sim" : "Nao");
-    
-    // Conta arestas
+
     int arestas = 0;
     for (int i = 0; i < G->num_vertices; i++)
         for (No* atual = G->vertices[i].lista_adjacencia; atual; atual = atual->proximo)
             arestas++;
     if (!G->eh_direcionado) arestas /= 2;
     printf("Numero de arestas: %d\n", arestas);
-    
-    // Componentes conexas
+
     printf("\n=== Componentes Conexas ===\nNumero de componentes conexas: %d\n",
            numeroComponentesConexas(G));
-    
-    // Análise de graus
+
     printf("\n=== Analise de Graus ===\n");
     printf("Grau medio: %.2f\n", grauMedio(G));
     
     int v_max;
     int max_g = grauMax(G, &v_max);
     printf("Maior grau: %d (vertice %d)\n", max_g, v_max);
-    
-    // Menor caminho médio
+
     printf("\n=== Menor Caminho Medio ===\n");
     printf("Calculando menor caminho medio (usando BFS para cada vertice)...\n");
     clock_t inicio = clock();
@@ -43,8 +38,7 @@ int main() {
     if (menor >= 0) printf("Menor caminho medio: %.2f\n", menor);
     else printf("Nao foi possivel calcular o menor caminho medio (grafo desconexo ou erro)\n");
     printf("Tempo de calculo: %.2f segundos\n", tempo);
-    
-    // Assortatividade
+
     printf("\n=== Assortatividade ===\nCalculando assortatividade...\n");
     inicio = clock();
     float ass = assortatividade(G);
@@ -57,7 +51,6 @@ int main() {
            "neutra (sem correlacao significativa entre graus)");
     printf("Tempo de calculo: %.2f segundos\n", tempo);
     
-    // Estatísticas adicionais
     printf("\n=== Estatisticas Adicionais ===\n");
     
     int* dist = calloc(max_g + 1, sizeof(int));
